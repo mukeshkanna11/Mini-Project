@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background:darkcyan;
+    font-family: "poppins", sans-serif;
+    font-weight: 800;
+}
+
+.container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    font-size: 2em;
+    color:darkblue;
+    font-style: italic;
+}
+
+.reset{
+    padding: 8px 25px;
+    color: blue;
+    font-size: medium;
+    border-radius: 5px;
+    font-weight: 600;
+    font-family: "poppins", sans-serif;
+    font-style: italic;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.rest:hover{
+    background:beige;
+}
+
+
+
+.game{
+    width: 430px;
+    height: 430px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color:aquamarine;
+    opacity: 80px;
+    gap: -10px;
+    
+}
+
+.item{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    margin-left:22px;
+    margin-top: 12px;
+    background: #ffff;
+    transform: rotateY(180deg);
+    transition: 0.25s;
+    
+}
+
+.item.boxopen{
+    transform: rotateY(0deg);
+}
+
+
+.item::after{
+    content: '';
+    position: absolute;
+    inset:0;
+    transition: 0.25s;
+    transform:rotateY(0deg);
+    background:darkslateblue;
+    /* opacity: 0.65; */
+    backface-visibility: hidden;
+}
+
+.boxopen:after
+{
+ transform: rotateY(180deg);
+}
