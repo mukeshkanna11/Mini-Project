@@ -1,53 +1,76 @@
-//Dom js functions//
+// Memory Game with DOM Manipulation and Events
 
+// List of emojis for the game
 const emojis = ['😊', '😊', '❤️', '❤️', '😍', '😍', '👍', '👍', '✌️', '✌️', '😎', '😎', '😉', '😉', '⛷️', '⛷️'];
 
 // Shuffle emojis
-var shuf_emojis = emojis.sort(() => (Math.random() > 0.5) ? 1 : -1);
+const shuffledEmojis = emojis.sort(() => Math.random() - 0.5);
 
 // Create game board
-for (var i = 0; i < emojis.length; i++) {
-    let box = document.createElement('div');
-    box.className = 'item';
-    box.innerHTML = shuf_emojis[i];
-
-    box.onclick = function () {
-        
-        if (this.classList.contains('boxopen') || this.classList.contains('boxmatch')) {
-            return;
-        }
-        
-        this.classList.add('boxopen');
-        
-        setTimeout(function () {
-            const openBoxes = document.querySelectorAll('.boxopen');
-
-            if (openBoxes.length > 1) {
-                if (openBoxes[0].innerHTML === openBoxes[1].innerHTML) {
-                    // Add the 'boxmatch' class to both matched boxes
-                    openBoxes[0].classList.add('boxmatch');
-                    openBoxes[1].classList.add('boxmatch');
-
-                   
-                    openBoxes[0].classList.remove('boxopen');
-                    openBoxes[1].classList.remove('boxopen');
-
-                   
-                    if (document.querySelectorAll('.boxmatch').length === emojis.length) {
-                        setTimeout(() => {
-                            alert('Congratulations! You win!');
-                        }, 200); // Delay for smooth transition
-                    }
-                } else {
-                    
-                    setTimeout(() => {
-                        openBoxes[0].classList.remove('boxopen');
-                        openBoxes[1].classList.remove('boxopen');
-                    }, 500);
-                }
-            }
-        }, 500);
-    };
-
-    document.querySelector('.game').appendChild(box);
+const gameContainer = document.querySelector('.game');
+function createGameBoard() {
+    shuffledEmojis.forEach((emoji) => {
+        const box = document.createElement('div');
+        box.className = 'item';
+        box.innerHTML = emoji;
+        gameContainer.appendChild(box);
+    });
 }
+
+// Game logic
+let firstBox = null;
+let secondBox = null;
+let isChecking = false;
+
+function handleBoxClick(e) {
+    const clickedBox = e.target;
+
+    // Ignore clicks on already matched or open boxes
+    if (clickedBox.classList.contains('boxopen') || clickedBox.classList.contains('boxmatch') || isChecking) {
+        return;
+    }
+
+    // Reveal the box
+    clickedBox.classList.add('boxopen');
+
+    // Check if this is the first or second box clicked
+    if (!firstBox) {
+        firstBox = clickedBox;
+    } else {
+        secondBox = clickedBox;
+        isChecking = true;
+
+        // Compare the two boxes
+        setTimeout(checkMatch, 500);
+    }
+}
+
+function checkMatch() {
+    if (firstBox.innerHTML === secondBox.innerHTML) {
+        // Match found
+        firstBox.classList.add('boxmatch');
+        secondBox.classList.add('boxmatch');
+    } else {
+        // No match, hide boxes again
+        firstBox.classList.remove('boxopen');
+        secondBox.classList.remove('boxopen');
+    }
+
+    // Reset selections
+    firstBox = null;
+    secondBox = null;
+    isChecking = false;
+
+    // Check if the game is won
+    if (document.querySelectorAll('.boxmatch').length === emojis.length) {
+        setTimeout(() => {
+            alert('Congratulations! You win!');
+        }, 200);
+    }
+}
+
+// Attach event listener to game container
+gameContainer.addEventListener('click', handleBoxClick);
+
+// Initialize the game
+createGameBoard();

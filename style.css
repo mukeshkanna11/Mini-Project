@@ -6,7 +6,7 @@ body{
     justify-content: center;
     align-items: center;
     color: white;
-    background:darkcyan;
+    background:whitesmoke;
     font-family: "poppins", sans-serif;
     font-weight: 800;
 }
@@ -27,7 +27,7 @@ h2{
 
 .reset{
     padding: 8px 25px;
-    color: blue;
+    color: darkblue;
     font-size: medium;
     border-radius: 5px;
     font-weight: 600;
@@ -48,7 +48,7 @@ h2{
     height: 430px;
     display: flex;
     flex-wrap: wrap;
-    background-color:aquamarine;
+    background-color:lightgrey;
     opacity: 80px;
     gap: -10px;
     
